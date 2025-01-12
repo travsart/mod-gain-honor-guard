@@ -172,9 +172,9 @@ public:
     //Reward Honor from either a Guard (creature 32768 flag) or Elite kill.
     void RewardHonor(Player* player, Creature* killed)
     {
-        if (!GainHonorGuardEnable || !player->IsAlive() || player->InArena() || player->HasAura(SPELL_AURA_PLAYER_INACTIVE))
+        if (!GainHonorGuardEnable || !player->IsAlive() || player->InArena() || player->HasAura(SPELL_AURA_PLAYER_INACTIVE) || player->GetSession()->IsBot())
             return;
-        if (!killed && killed->HasAuraType(SPELL_AURA_NO_PVP_CREDIT))
+        if (!killed || (killed && killed->HasAuraType(SPELL_AURA_NO_PVP_CREDIT)))
             return;
         if ((!GainHonorGuardOnGuardKill || !killed->ToCreature()->IsGuard()) && (!GainHonorGuardOnEliteKill || !killed->ToCreature()->isElite()))
             return;
